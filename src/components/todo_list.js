@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from "react"
+import { useState, useCallback } from "react"
 import { useSetRecoilState, useRecoilValue, selector, useRecoilCallback } from "recoil"
 import { fetchTodos } from "./network"
 import { todoState, todoFilterState } from "./atoms"
@@ -74,8 +74,8 @@ const TodoList = () => {
         <div className="flex flex-col p-8 shadow-md">
             {todos.length > 0 &&
                 <div className="space-y-4">
-                    {todos.map((todo, index) => (
-                        <Todo key={todo.id} todo={todo} index={index} />
+                    {todos.map(todo => (
+                        <Todo key={todo.id} todo={todo} />
                     ))}
                 </div>
             }

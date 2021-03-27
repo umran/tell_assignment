@@ -1,24 +1,26 @@
 import { useCallback } from "react"
 import { useSetRecoilState } from "recoil"
 import { todoState } from "./atoms"
-import { replaceItemAtIndex, removeItemAtIndex } from "./utils"
+import { replaceItemWithId, removeItemWithId } from "./utils"
 
-const Todo = ({ todo, index }) => {
+const Todo = ({ todo }) => {
+    const { id } = todo
     const setTodos = useSetRecoilState(todoState)
     
     const toggleTodoComplete = useCallback(() => {
         setTodos(old => {
-            const newTodos = replaceItemAtIndex(old, index, {
-                ...old[index],
-                completed: !old[index].completed
+            const previous = old.filter(item => item.id == id)[0]
+            const newTodos = replaceItemWithId(old, id, {
+                ...previous,
+                completed: !previous.completed
             })
             return newTodos
         })
-    }, [index])
+    }, [id])
 
     const removeTodo = useCallback(() => {
-        setTodos(old => removeItemAtIndex(old, index))
-    })
+        setTodos(old => removeItemWithId(old, id))
+    }, [id])
 
     return (
         <div className="flex justify-between shadow-md p-8">
